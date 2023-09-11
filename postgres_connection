@@ -1,0 +1,22 @@
+from sqlalchemy.orm import declarative_base, sessionmaker
+from sqlalchemy import create_engine, Column, Integer, String
+
+user = 'postgres'
+passw = 'baqerali123'
+host = 'localhost'
+db = 'baqerali'
+port = '5432'
+
+engine = create_engine(f'postgresql+psycopg2://{user}:{passw}\
+@{host}/{db}', echo=True)
+
+
+base = declarative_base()
+session_local = sessionmaker(bind=engine)
+base.metadata.create_all(engine)
+
+
+class Users(base):
+    __tablename__ = 'users'
+    id = Column(Integer, primary_key=True)
+    name = Column(String(100), nullable=False)
